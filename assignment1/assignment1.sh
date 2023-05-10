@@ -20,6 +20,6 @@ dirs=("./A1/classical" "./A1/classical/bach" "./A1/classical/bach/Air on the G S
                        "./A1/rap/rm/life goes on" "./A1/rap/rm/love u hate u" 
                        "./A1/rap/so-yeon" "./A1/rap/so-yeon/Latata" "./A1/rap/so-yeon/My Bag" "./A1/rap/so-yeon/Tomboy" "./A1/rap/suga")
 
-for str in ${dirs[@]}; do
-    mkdir -p '$str'
+for str in "${dirs[@]}"; do
+    mkdir -p "$str"
 done
