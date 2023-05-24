@@ -1,1 +1,1 @@
-find "$1" -type f -executable -name "$2" -execdir "./$3" "{}" \;
+find "$1" -type f -executable -name "$2" -exec "./$3" "{}" \;
