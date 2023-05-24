@@ -1,1 +1,1 @@
-ls -i $1 $2 > $3
+find "$1" -name "$2" -printf "%i %p\n"  | tee "$3"
