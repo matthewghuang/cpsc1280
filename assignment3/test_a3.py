@@ -10,9 +10,9 @@ class Test(unittest.TestCase):
     def setUpClass(cls):
         cls.shell = "/usr/bin/bash"
         if not os.path.isfile(cls.shell):
-            print("/usr/bin/bash not found, trying /bin/zsh")
+            print("/usr/bin/bash not found, trying /bin/zsh for macs")
             cls.shell = "/bin/zsh"
-        cls.assignment_scripts = [["script3_1.sh"], ["script3_2.sh"], ["script3_3.sh"]]
+        cls.assignment_scripts = [["script3_1.sh"], ["script3_2.sh"], ["script3_3.sh"],["script3_4.sh"]]
         
         #Create temp directory
         uidString = str(uuid.uuid4()) 
@@ -122,7 +122,6 @@ class Test(unittest.TestCase):
         print("Running Script 2")
         
         cpi = subprocess.run([self.shell, self.assignment_scripts[1][0],test_dir, pat, filename], capture_output=True, text=True)
-        
         lines = cpi.stdout.strip().split("\n")
         
         #check the results
@@ -150,9 +149,47 @@ class Test(unittest.TestCase):
             print(text)
             self.assertTrue(text == answers[i].strip(), "Incorrect output")
         print("End of run")
-    
     def test_script3_4(self):
-        pass
+        print("Output for script3_4.sh")
+        self.assertTrue(os.path.isfile(self.assignment_scripts[2][0]),"script3_4.sh file not found")
+        
+        test_dir = "p4_test"
+        os.mkdir(test_dir)
+        
+        dirs = ["sub1", "sub2","sub1/inner1.txt"]
+        filelist = [["fan.txt", "fun.txt", "fern.txt","fit.txt","sim.rat"],
+                    ["nsn.txt", "fin.txt", "fuun.txt","lack.txt","txt.tack"],
+                    ["outer.sub","inner.dub"]]
+
+        for i in range(len(dirs)) :
+            os.mkdir(test_dir+"/"+dirs[i])
+            for file in filelist[i]:
+                cmd = "echo test > " + test_dir+"/"+dirs[i]+"/"+file
+                os.system(cmd)
+
+        pat = "*.txt"
+        expectedFiles = ["p4_test/sub1/fan.txt","p4_test/sub1/fun.txt","p4_test/sub1/fern.txt","p4_test/sub1/fit.txt",
+                         "p4_test/sub2/nsn.txt","p4_test/sub2/fin.txt","p4_test/sub2/fuun.txt","p4_test/sub2/lack.txt"] 
+        cpi = subprocess.run([self.shell, self.assignment_scripts[3][0],test_dir, pat], capture_output=True, text=True)
+        print("stderr:\n" + cpi.stderr)
+        print("stdout:\n" + cpi.stdout)
+        
+        lines = cpi.stdout.strip().split("\n")
+        n = 3
+        try:
+            for line in lines[0:-1]:
+                files = line.strip().split(" ")
+                self.assertTrue(len(files) == n, "One of the printed lines does not contain 3 filenames")
+                for file in files:
+                    expectedFiles.remove(file.strip())
+            lastlinefiles = lines[-1].strip().split(" ")
+            for file in lastlinefiles:
+                expectedFiles.remove(file)
+        except:
+            self.assertTrue(False,"File found that does not match pattern")
+        self.assertTrue(len(expectedFiles) == 0, "Not all the expected files for the pattern were found")
+        print("Done!")
+        
         
 if __name__ == '__main__':
     unittest.main()
