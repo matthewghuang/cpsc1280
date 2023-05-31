@@ -1,0 +1,1 @@
+find q2_p2 -perm /o=w -print -exec chmod ugo-w {} \;

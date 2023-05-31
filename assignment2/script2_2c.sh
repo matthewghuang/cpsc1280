@@ -1,0 +1,1 @@
+find q2_p2 -wholename *z* -type f
