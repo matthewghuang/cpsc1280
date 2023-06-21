@@ -1,0 +1,1 @@
+wc "$1"/* -l | sort -r | head -n 2 | tail -n 1 | sed -n -E "s/.*([0-9]+) (.*)$/\2/p"
