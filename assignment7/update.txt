@@ -1,0 +1,6 @@
+"MachineID","Item","Operation"
+"MA004","ItemA",500
+"MA001","ItemB",+200
+"MA003","ItemA",-200
+"MA005","ItemA",600
+"MA005","ItemB",700

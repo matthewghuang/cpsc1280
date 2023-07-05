@@ -1,0 +1,2 @@
+"MachineID","Item","Operation"
+"MA005","ItemA",500
